@@ -16,6 +16,7 @@
     <script>  
     import Exif from 'exif-js'  
     import axios from 'axios'
+    import Api from '../api'
 
     export default {  
       data () {  
@@ -30,31 +31,7 @@
           let files = e.target.files || e.dataTransfer.files;  
           if (!files.length) return;  
           this.picValue = files[0];  
-          //this.imgPreview(this.picValue);  
-
-                     // console.log(this.headerImage)
-            // 创建form对象
-            let param = new FormData() 
-            // 通过append向form对象添加数据
-            param.append('file', this.picValue) 
-            param.append('fileName', '1.png') 
-            param.append('uploaderId', 'xsfsdfsdfdsfds') 
-            // 添加form表单中其他数据
-            param.append('chunk', '0')
-            // param.append('chunk', '0')
-            // FormData私有类对象，访问不到，可以通过get判断值是否传进去
-            //console.log(param.get('file')) 
-            let config = {
-              headers: {'Content-Type': 'multipart/form-data'}
-            }
-           // 添加请求头
-          axios.post('http://192.168.140.40:3000/upload/add', param, config)
-          .then(response => {
-              if (response.data.code === 0) {
-                  self.ImgUrl = response.data.data
-              }
-              console.log(response.data)
-            })
+          this.imgPreview(this.picValue);  
         },  
         imgPreview (file) {  
           let self = this;  
@@ -91,27 +68,12 @@
             }  
           },  
           postImg () {  
-            //这里写接口
-           // console.log(this.headerImage)
-            // 创建form对象
-            let param = new FormData() 
-            // 通过append向form对象添加数据
-            param.append('file', this.headerImage) 
-             param.append('fileName', '1.png') 
-            // 添加form表单中其他数据
-            param.append('chunk', '0')
-            // param.append('chunk', '0')
-            // FormData私有类对象，访问不到，可以通过get判断值是否传进去
-            //console.log(param.get('file')) 
-            let config = {
-              headers: {'Content-Type': 'multipart/form-data'}
-            }
-           // 添加请求头
-          axios.post('http://localhost:3000/upload/add', param, config)
+          let data = Object.assign({},{
+            file:this.picValue,
+            uploaderId:'gdfgdfgf'
+          })
+          Api.uploadImage(data)
           .then(response => {
-              if (response.data.code === 0) {
-                  self.ImgUrl = response.data.data
-              }
               console.log(response.data)
             })
           },  
