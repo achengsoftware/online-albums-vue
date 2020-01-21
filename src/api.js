@@ -1,10 +1,10 @@
 'use strict'
 import axios from 'axios'
 
-const BASE = 'http://192.168.140.40:3000/upload/'
+const BASE = 'http://192.168.140.40:3000/'
 
 function uploadImage(data){
-    let url = `${BASE}add`
+    let url = `${BASE}upload/add`
     let {file,uploaderId} = data;
     // 创建form对象
     let param = new FormData() 
@@ -19,8 +19,24 @@ function uploadImage(data){
     return axios.post(url, param, config)
 }
 
-
+ async function login(us,ps){
+    let url = `${BASE}user`
+    let res  = await axios.get(url)
+    console.log(res.data)
+    for (const act of res.data) {
+        if(act.name === us && act.password === ps)
+        {
+            return new Promise(resolve =>{
+                resolve(true)
+            })
+        }
+    }
+    return new Promise(resolve =>{
+        resolve(false)
+    })
+}
 
 export default {
-    uploadImage
+    uploadImage,
+    login
 }

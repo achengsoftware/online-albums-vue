@@ -1,36 +1,28 @@
 
     <template>  
       <div>  
-        <div style="padding:20px;">  
-          <div class="show">  
-            <div class="picture" :style="'backgroundImage:url('+headerImage+')'"></div>  
-          </div>  
-          <div style="margin-top:20px;">  
-            <input type="file" id="upload" accept="image" @change="upload">  
-            <label for="upload"></label>  
-          </div>  
-        </div>  
+        <van-uploader :after-read="upload">
+         <van-icon name="add-o" />
+        </van-uploader>
       </div>  
     </template>  
       
     <script>  
     import Exif from 'exif-js'  
-    import axios from 'axios'
     import Api from '../api'
 
     export default {  
       data () {  
         return {  
-          headerImage:'',picValue:''  
+          headerImage:'',picValue:'',
         }  
       },  
       mounted () {  
       },  
       methods: {  
-        upload (e) {  
-          let files = e.target.files || e.dataTransfer.files;  
-          if (!files.length) return;  
-          this.picValue = files[0];  
+        upload (file) {  
+          this.picValue = file.file;  
+         console.log(file)
           this.imgPreview(this.picValue);  
         },  
         imgPreview (file) {  
