@@ -50,7 +50,7 @@ export default {
     .field{
         border: none;
         text-align: center;
-        font-size: 12px;
+        font-size: 0.8rem;
         padding: 4px;
         width: 240px;
         margin-top: 30px;
